@@ -64,7 +64,9 @@ import java.awt.BorderLayout;
 			buttonPanel.add(btnExibir);
 			btnEditar = new JButton("Editar");
 			buttonPanel.add(btnEditar);
+			btnNovo = new JButton("Novo");
 			buttonPanel.add(btnNovo);
+			btnApagar  = new JButton("Apagar");
 			buttonPanel.add(btnApagar);
 			
 		}
