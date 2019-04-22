@@ -1,17 +1,16 @@
 import java.awt.BorderLayout;
-	import java.awt.Dimension;
-
-	import javax.swing.JFrame;
-	import javax.swing.JPanel;
-	import javax.swing.JLabel;
-	import javax.swing.JTextField;
-	import javax.swing.DefaultListModel;
-	import javax.swing.JButton;
-	import java.awt.Font;
-	import javax.swing.JList;
-	import java.awt.GridLayout;
-	import javax.swing.JProgressBar;
-	import javax.swing.JScrollPane;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.JList;
+import java.awt.GridLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 
 	public class GUI {
 	
@@ -23,7 +22,6 @@ import java.awt.BorderLayout;
 		private JButton btnApagar;
 		private JList<String> resultsList;
 		private DefaultListModel<String> modelList;
-		
 		
 		public GUI() {
 			initialize();
@@ -38,7 +36,7 @@ import java.awt.BorderLayout;
 		 * Initialize the contents of the frame.
 		 */
 		private void initialize() {
-			frame = new JFrame();
+			frame = new JFrame("File explorer");
 			frame.setResizable(false);
 			frame.setBounds(300, 300, 500, 300);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +66,6 @@ import java.awt.BorderLayout;
 			buttonPanel.add(btnNovo);
 			btnApagar  = new JButton("Apagar");
 			buttonPanel.add(btnApagar);
-			
 		}
 			
 		public JFrame getFrame() {
@@ -82,6 +79,4 @@ import java.awt.BorderLayout;
 		public DefaultListModel<String> getModelList() {
 			return modelList;
 		}
-	
-
 }

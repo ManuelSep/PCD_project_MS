@@ -7,13 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-
-
 public class Client extends Thread{
-	
-	
-
-
 
 		private Socket socket;
 		private ObjectOutputStream out;
@@ -40,7 +34,6 @@ public class Client extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
 
 		private void addButtonActions() {
@@ -71,6 +64,8 @@ public class Client extends Thread{
 //					gui.getModelList().addElement(word);
 //				}
 //			});
+			
+			
 
 			gui.getFrame().addWindowListener(new WindowAdapter() {
 				@Override
@@ -85,9 +80,4 @@ public class Client extends Thread{
 		private void closeSocket() {
 			// TODO Auto-generated method stub
 		}
-
-	
-
-
-
 }

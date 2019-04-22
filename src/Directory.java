@@ -44,10 +44,7 @@ public class Directory {
 				doConnection(socket);
 			}
 		}
-		
-		
-		
-		
+	
 		private void doConnection(Socket socket) throws IOException {
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
