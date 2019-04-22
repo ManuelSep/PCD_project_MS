@@ -8,14 +8,8 @@ public class LocalFile implements PCDFile{
 	public static final int NUM_READERS=3;
 
 	@Override
-	public String read() throws FileSystemException {
-		try {
-			return new String(read(0, length()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public String read() throws FileSystemException , IOException {
+		return new String(read(0, length()));
 	}
 	
 	@Override
