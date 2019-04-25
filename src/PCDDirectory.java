@@ -12,12 +12,11 @@ import java.util.LinkedList;
 public interface PCDDirectory extends Serializable {
 
 	
-	//	COMEÇA AQUI O CODIGO do Directory!!!!!!
 	public final int maxSize = 1024;
 	public static final int PORTO = 8080;
 	public ServerSocket serverSocket;
 	public Socket socket;
-	public ArrayList <Client> usersList;
+	public ArrayList <Client> usersList = new ArrayList<Client>();
 	
 	public static void main(String[] args) throws IOException {
 		try {
@@ -28,7 +27,7 @@ public interface PCDDirectory extends Serializable {
 	}
 	
 	public static void startServer() throws IOException {
-		usersList = new ArrayList<Client>();
+//		usersList = new ArrayList<Client>();
 		serverSocket = new ServerSocket(PORTO);
 		System.out.println("Ready, wait for users.");
 		while (true) {
@@ -58,6 +57,7 @@ public interface PCDDirectory extends Serializable {
 			e.printStackTrace();
 		}
 	}
+	
 //	ACABA AQUI O CODIGO DO DIRECTORY!!!!!
 	
 	/**
