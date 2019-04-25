@@ -12,5 +12,4 @@ public interface PCDFile extends Serializable {
 	public abstract int length() throws FileSystemException, IOException;
 	public abstract String read() throws FileSystemException, IOException;
 	public abstract void write(String dataToWrite) throws FileSystemException, IOException;
-
 }

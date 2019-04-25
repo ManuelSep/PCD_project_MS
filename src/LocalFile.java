@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.FileSystemException;
 
-public class LocalFile implements PCDFile{
+public class LocalFile implements PCDFile {
 	public static final int NUM_READERS=3;
 
 	@Override
