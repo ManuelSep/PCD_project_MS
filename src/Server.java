@@ -19,7 +19,7 @@ public class Server implements Serializable {
 	
 	public void main(String[] args) throws IOException {
 		try {
-			startServer();
+			new Server().startServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
