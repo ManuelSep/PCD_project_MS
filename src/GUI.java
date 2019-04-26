@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 		private JButton btnApagar;
 		private JList<String> resultsList;
 		private DefaultListModel<String> modelList;
+		private String ButtonName;
 		
 		public GUI() {
 			initialize();
@@ -67,7 +68,19 @@ import javax.swing.JScrollPane;
 			btnApagar  = new JButton("Apagar");
 			buttonPanel.add(btnApagar);
 		}
+		
+		public void createButtonFrame(String ButtonName) {
+			frame = new JFrame(ButtonName);
+			frame.setResizable(false);
+			frame.setBounds(200, 200, 400, 200);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
+		}
+		
+		public JButton getBtnEditar() {
+			return btnEditar;
+		}
+		
 		public JFrame getFrame() {
 			return frame;
 		}

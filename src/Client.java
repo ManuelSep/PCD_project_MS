@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Client extends Thread{
 
@@ -13,6 +14,7 @@ public class Client extends Thread{
 		private ObjectOutputStream out;
 		private ObjectInputStream in;
 		private GUI gui;
+		private String [] buttonOptions = {"Tamanho","Exibir","Editar"};
 		
 		public static void main(String[] args) throws IOException {
 			new Client().runClient();
@@ -23,9 +25,9 @@ public class Client extends Thread{
 			try {
 				socket = new Socket("localhost", 8080);
 				out = new ObjectOutputStream(socket.getOutputStream());
-				//in = new ObjectInputStream(socket.getInputStream());
+				in = new ObjectInputStream(socket.getInputStream());
 				out.writeObject(new String("INSC 127.0.0.1 8081"));
-				System.out.println("Connected to Directory");
+				System.out.println("Connected to Server");
 				
 				gui = new GUI();
 				addButtonActions();
@@ -37,6 +39,23 @@ public class Client extends Thread{
 		}
 
 		private void addButtonActions() {
+			
+			gui.getBtnEditar().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					btnEditar();
+				}
+				
+				private void btnEditar() {
+					for (int i = 0; i < buttonOptions.length; i++) {
+						if(buttonOptions[i] == "Editar") {
+							gui.createButtonFrame(buttonOptions[i]);
+						}
+					}
+				}
+			});
+			
 //			gui.getBtnSearch().addActionListener(new ActionListener() {
 //
 //				@Override
