@@ -1,41 +1,28 @@
 import java.io.IOException;
-import java.io.Serializable;
-import java.net.Socket;
-import java.nio.file.FileSystemException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-public class Server implements Serializable {
 	
-	public final int maxSize = 1024;
+public class Directory {
+
+	private final int maxSize = 1024;
 	public static final int PORTO = 8080;
 	private ServerSocket serverSocket;
 	private Socket socket;
-	private String rootName;
-	public ArrayList <Client> usersList;
-		
-	
-	
+	private ArrayList <Client> usersList;
+
 	public static void main(String[] args) throws IOException {
 		try {
-
-			new Server("Ola").startServer();
-
+			new Directory().startServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Server(String rootName) {
-		this.rootName = rootName;
-	}
-	
-	
-	public void startServer() throws IOException {
+	private void startServer() throws IOException {
 		usersList = new ArrayList<Client>();
 		serverSocket = new ServerSocket(PORTO);
 		System.out.println("Ready, wait for users.");
@@ -46,7 +33,7 @@ public class Server implements Serializable {
 		}
 	}
 
-	public static void doConnection(Socket socket) throws IOException {
+	private void doConnection(Socket socket) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		String message;
