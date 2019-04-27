@@ -18,8 +18,7 @@ public class Client extends Thread{
 			new Client().runClient();
 		}
 
-		private void runClient() throws IOException {
-			
+		private void runClient() throws IOException {	
 			try {
 				socket = new Socket("localhost", 8080);
 				out = new ObjectOutputStream(socket.getOutputStream());

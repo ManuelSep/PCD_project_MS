@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -6,6 +7,13 @@ import java.nio.file.FileSystemException;
 
 public class LocalFile implements PCDFile {
 	public static final int NUM_READERS=3;
+	private File file; 
+	
+	public LocalFile(File file){
+		this.file = file;
+	}
+	
+	
 
 	@Override
 	public String read() throws FileSystemException , IOException {
@@ -81,8 +89,7 @@ public class LocalFile implements PCDFile {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return file.getName();
 	}
 
 	@Override

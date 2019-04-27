@@ -8,18 +8,6 @@ import java.util.LinkedList;
 	
 public class Directory {
 
-//		private String route;
-//		private LinkedList<User> users;
-//	
-//		public Directory(String route) {
-//			this.route = route;
-//			users = new LinkedList<User>();
-//		}
-//	
-//		public void addUser(User user) {
-//			users.add(user);
-//		}
-
 	private final int maxSize = 1024;
 	public static final int PORTO = 8080;
 	private ServerSocket serverSocket;

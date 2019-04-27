@@ -15,15 +15,23 @@ public class Server implements Serializable {
 	public static final int PORTO = 8080;
 	private ServerSocket serverSocket;
 	private Socket socket;
+	private String rootName;
 	public ArrayList <Client> usersList;
+		
 	
-	public void main(String[] args) throws IOException {
+	
+	public static void main(String[] args) throws IOException {
 		try {
-			startServer();
+			new Server("Ola").startServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public Server(String rootName) {
+		this.rootName = rootName;
+	}
+	
 	
 	public void startServer() throws IOException {
 		usersList = new ArrayList<Client>();
