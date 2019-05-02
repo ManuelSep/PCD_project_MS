@@ -41,10 +41,15 @@ public class Server implements Serializable {
 		while (true) {
 			socket = serverSocket.accept();
 			System.out.println("Conection accepted");
+			sendAllFiles(socket);
 			doConnection(socket);
 		}
 	}
 
+	public void sendAllFiles(Socket socket) throws IOException {
+		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+		out.writeObject(localDirectory.getDirectoryListing());
+	}
 	public static void doConnection(Socket socket) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
