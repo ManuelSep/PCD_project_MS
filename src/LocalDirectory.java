@@ -76,4 +76,18 @@ public class LocalDirectory implements PCDDirectory {
 			e.printStackTrace();
 		}
 	}
+	public void testeMessage() {
+		LocalDirectory test = new LocalDirectory("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files");
+		try {
+			for (String name : test.getDirectoryListing()) {
+				System.out.println(name);
+			}
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
