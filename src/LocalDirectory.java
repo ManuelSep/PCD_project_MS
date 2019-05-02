@@ -11,12 +11,18 @@ public class LocalDirectory implements PCDDirectory {
 	public LocalDirectory(String rootName) {
 		this.rootName = rootName;
 		File directory = new File(rootName);
-		System.out.println(directory.isDirectory());
+		
+		if(!directory.isDirectory()) {
+			throw new IllegalArgumentException("It needs a directory! It's wrong or empty");
+		}
 		System.out.println(directory.toString());
 		System.out.println(directory.listFiles());
 		for (File f : directory.listFiles()){
 			files.add(new LocalFile(f));
 		}
+	}
+	public LocalDirectory() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -57,7 +63,7 @@ public class LocalDirectory implements PCDDirectory {
 	}	
 	
 	public static void main(String[] args) {
-		LocalDirectory test = new LocalDirectory("/Users/franciscoazevedo/Documents/Pessoal");
+		LocalDirectory test = new LocalDirectory("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files");
 		try {
 			for (String name : test.getDirectoryListing()) {
 				System.out.println(name);
@@ -70,5 +76,18 @@ public class LocalDirectory implements PCDDirectory {
 			e.printStackTrace();
 		}
 	}
-
+	public void testeMessage() {
+		LocalDirectory test = new LocalDirectory("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files");
+		try {
+			for (String name : test.getDirectoryListing()) {
+				System.out.println(name);
+			}
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

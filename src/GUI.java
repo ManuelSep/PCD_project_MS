@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 		private JButton btnApagar;
 		private JList<String> resultsList;
 		private DefaultListModel<String> modelList;
+		private String ButtonName;
 		
 		public GUI() {
 			initialize();
@@ -51,7 +52,7 @@ import javax.swing.JScrollPane;
 			JScrollPane scrollList = new JScrollPane(resultsList);
 			scrollList.setPreferredSize(new Dimension(340, 218));
 			panelResult.add(scrollList);
-				
+			
 			/***** Bottom *****/
 			
 			JPanel buttonPanel = new JPanel();
@@ -67,12 +68,25 @@ import javax.swing.JScrollPane;
 			btnApagar  = new JButton("Apagar");
 			buttonPanel.add(btnApagar);
 		}
-			
+		
+		public void createButtonFrame(String ButtonName) {
+			frame = new JFrame(ButtonName);
+			frame.setResizable(false);
+			frame.setBounds(200, 200, 400, 200);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			//open(); Abre uma nova frame como desejado mas ao fechar fecha todas as JFrames
+		}
+		
+		public JButton getBtnEditar() {
+			return btnEditar;
+		}
+		
 		public JFrame getFrame() {
 			return frame;
 		}
 		
 		public JList<String> getListResult() {
+			
 			return resultsList;
 		}
 
