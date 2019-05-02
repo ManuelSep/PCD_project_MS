@@ -16,12 +16,12 @@ public class Server implements Serializable {
 	private ServerSocket serverSocket;
 	private Socket socket;
 	private String rootName;
+	private LocalDirectory localDirectory;
 	public ArrayList <Client> usersList;
 	
 	public static void main(String[] args) throws IOException {
 		try {
-
-			new Server("Ola").startServer();
+			new Server("/Users/franciscoazevedo/code/java/PCD_project_MS").startServer();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -30,6 +30,7 @@ public class Server implements Serializable {
 	
 	public Server(String rootName) {
 		this.rootName = rootName;
+		localDirectory = new LocalDirectory(rootName); 
 	}
 	
 	
@@ -40,10 +41,16 @@ public class Server implements Serializable {
 		while (true) {
 			socket = serverSocket.accept();
 			System.out.println("Conection accepted");
+			sendAllFiles(socket);
 			doConnection(socket);
 		}
 	}
 
+	public void sendAllFiles(Socket socket) throws IOException {
+		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+		out.writeObject(localDirectory.getDirectoryListing());
+	}
+	
 	public static void doConnection(Socket socket) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());

@@ -32,8 +32,10 @@ public class Client extends Thread{
 				in = new ObjectInputStream(socket.getInputStream());
 				out.writeObject(new String("INSC 127.0.0.1 8081"));
 				System.out.println("Connected to Server");
-				String messageFromServer = (String)in.readObject();
-				System.out.println(messageFromServer);
+				String[] messageFromServer = (String[])in.readObject();
+				for (String fileName : messageFromServer) {
+					System.out.println(fileName);
+				}
 				in.close();
 				gui = new GUI();
 				addButtonActions();
