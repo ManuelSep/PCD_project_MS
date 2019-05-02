@@ -17,8 +17,6 @@ public class Server implements Serializable {
 	private Socket socket;
 	private String rootName;
 	public ArrayList <Client> usersList;
-		
-	
 	
 	public static void main(String[] args) throws IOException {
 		try {
@@ -36,7 +34,7 @@ public class Server implements Serializable {
 	
 	
 	public void startServer() throws IOException {
-		usersList = new ArrayList<Client>();
+//		usersList = new ArrayList<Client>();
 		serverSocket = new ServerSocket(PORTO);
 		System.out.println("Ready, wait for users.");
 		while (true) {
@@ -49,6 +47,7 @@ public class Server implements Serializable {
 	public static void doConnection(Socket socket) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+		out.writeObject("messagem do server");
 		String message;
 		try {
 			message = (String) in.readObject();
@@ -56,6 +55,7 @@ public class Server implements Serializable {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		out.close();
 	}
 
 	public void closeServerSocket() {

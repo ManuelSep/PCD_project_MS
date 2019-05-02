@@ -17,17 +17,24 @@ public class Client extends Thread{
 		private String [] buttonOptions = {"Tamanho","Exibir","Editar"};
 		
 		public static void main(String[] args) throws IOException {
-			new Client().runClient();
+			try {
+				new Client().runClient();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
-		private void runClient() throws IOException {	
+		private void runClient() throws IOException, ClassNotFoundException {	
 			try {
 				socket = new Socket("localhost", 8080);
 				out = new ObjectOutputStream(socket.getOutputStream());
 				in = new ObjectInputStream(socket.getInputStream());
 				out.writeObject(new String("INSC 127.0.0.1 8081"));
 				System.out.println("Connected to Server");
-				
+				String messageFromServer = (String)in.readObject();
+				System.out.println(messageFromServer);
+				in.close();
 				gui = new GUI();
 				addButtonActions();
 				gui.open();

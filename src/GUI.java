@@ -52,7 +52,7 @@ import javax.swing.JScrollPane;
 			JScrollPane scrollList = new JScrollPane(resultsList);
 			scrollList.setPreferredSize(new Dimension(340, 218));
 			panelResult.add(scrollList);
-				
+			
 			/***** Bottom *****/
 			
 			JPanel buttonPanel = new JPanel();
@@ -74,7 +74,7 @@ import javax.swing.JScrollPane;
 			frame.setResizable(false);
 			frame.setBounds(200, 200, 400, 200);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
+			//open(); Abre uma nova frame como desejado mas ao fechar fecha todas as JFrames
 		}
 		
 		public JButton getBtnEditar() {
@@ -86,6 +86,7 @@ import javax.swing.JScrollPane;
 		}
 		
 		public JList<String> getListResult() {
+			
 			return resultsList;
 		}
 
