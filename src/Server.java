@@ -21,7 +21,7 @@ public class Server implements Serializable {
 	
 	public static void main(String[] args) throws IOException {
 		try {
-			new Server("Ola").startServer();
+			new Server("/Users/franciscoazevedo/code/java/PCD_project_MS").startServer();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,6 +50,7 @@ public class Server implements Serializable {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		out.writeObject(localDirectory.getDirectoryListing());
 	}
+	
 	public static void doConnection(Socket socket) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
