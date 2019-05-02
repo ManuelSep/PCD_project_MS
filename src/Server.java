@@ -16,11 +16,11 @@ public class Server implements Serializable {
 	private ServerSocket serverSocket;
 	private Socket socket;
 	private String rootName;
+	private LocalDirectory localDirectory;
 	public ArrayList <Client> usersList;
 	
 	public static void main(String[] args) throws IOException {
 		try {
-
 			new Server("Ola").startServer();
 
 		} catch (IOException e) {
@@ -30,6 +30,7 @@ public class Server implements Serializable {
 	
 	public Server(String rootName) {
 		this.rootName = rootName;
+		localDirectory = new LocalDirectory(rootName); 
 	}
 	
 	
