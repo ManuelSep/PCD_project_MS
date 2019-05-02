@@ -17,8 +17,6 @@ public class Server implements Serializable {
 	private Socket socket;
 	private String rootName;
 	public ArrayList <Client> usersList;
-		
-	
 	
 	public static void main(String[] args) throws IOException {
 		try {
