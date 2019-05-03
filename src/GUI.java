@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JList;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
@@ -20,8 +22,9 @@ import javax.swing.JScrollPane;
 		private JButton btnEditar;
 		private JButton btnNovo;
 		private JButton btnApagar;
-		private JList<String> resultsList;
+		private ArrayList<String> textsList;
 		private DefaultListModel<String> modelList;
+//		private JList<String> resultsList = new JList<>(modelList);
 		private String ButtonName;
 		
 		public GUI() {
@@ -46,12 +49,14 @@ import javax.swing.JScrollPane;
 			/***** Center *****/
 			
 			JPanel panelResult = new JPanel();
+	
+//			for (String text : getTextList()) {
+//				panelResult.add(new JLabel(text));
+//			}
+			
 			frame.getContentPane().add(panelResult, BorderLayout.CENTER);
-			modelList = new DefaultListModel<>();
-			resultsList = new JList<>(modelList);
-			JScrollPane scrollList = new JScrollPane(resultsList);
-			scrollList.setPreferredSize(new Dimension(340, 218));
-			panelResult.add(scrollList);
+			
+			
 			
 			/***** Bottom *****/
 			
@@ -85,10 +90,28 @@ import javax.swing.JScrollPane;
 			return frame;
 		}
 		
-		public JList<String> getListResult() {
-			
-			return resultsList;
+		public ArrayList<String> getTextList(){
+			return textsList;
 		}
+		
+		public void setTextList(ArrayList<String> textsList){
+			this.textsList= textsList;
+		}
+		
+//		public void displayResults(){
+//			for (String text : getTextList()) {
+//				new JLabel(text);
+//			}
+//		}
+		
+//		public JList<String> getListResult() {
+//			
+//			return resultsList;
+//		}
+//		
+//		public void setListResult(JList<String> resultsList) {
+//			this.resultsList = resultsList;
+//		}
 
 		public DefaultListModel<String> getModelList() {
 			return modelList;
