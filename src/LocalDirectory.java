@@ -81,7 +81,9 @@ public class LocalDirectory implements PCDDirectory {
 		try {
 			for (String name : test.getDirectoryListing()) {
 				System.out.println(name);
+				
 			}
+			
 		} catch (FileSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
