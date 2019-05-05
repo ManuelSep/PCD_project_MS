@@ -42,16 +42,18 @@ public class Client extends Thread{
 			
 			for (String fileName : messageFromServer) {
 				System.out.println(fileName);
-				texts.add(fileName);
-//				gui.setTextList(texts);
-				modelList.addElement(fileName);
+//				texts.add(fileName);
+				
+//				modelList.addElement(fileName);
 				
 			}
+			
 			gui = new GUI();
 			addButtonActions();
 			
 			gui.open();
 			
+			gui.setTextList(messageFromServer);
 			
 			
 

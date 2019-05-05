@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 	public class GUI {
 	
@@ -23,7 +24,9 @@ import javax.swing.JScrollPane;
 		private JButton btnNovo;
 		private JButton btnApagar;
 		private ArrayList<String> textsList;
-		private DefaultListModel<String> modelList;
+		private DefaultListModel<String> files = new DefaultListModel<>();
+		private JList<String> fileNameList = new JList<String>();
+		private JPanel panelResult;
 //		private JList<String> resultsList = new JList<>(modelList);
 		private String ButtonName;
 		
@@ -48,12 +51,13 @@ import javax.swing.JScrollPane;
 						
 			/***** Center *****/
 			
-			JPanel panelResult = new JPanel();
+			panelResult = new JPanel();
 	
 //			for (String text : getTextList()) {
 //				panelResult.add(new JLabel(text));
 //			}
 			
+			panelResult.add(fileNameList);
 			frame.getContentPane().add(panelResult, BorderLayout.CENTER);
 			
 			
@@ -74,6 +78,7 @@ import javax.swing.JScrollPane;
 			buttonPanel.add(btnApagar);
 		}
 		
+	
 		public void createButtonFrame(String ButtonName) {
 			frame = new JFrame(ButtonName);
 			frame.setResizable(false);
@@ -94,8 +99,11 @@ import javax.swing.JScrollPane;
 			return textsList;
 		}
 		
-		public void setTextList(ArrayList<String> textsList){
-			this.textsList= textsList;
+		public void setTextList(String[] textsList){
+			for (String string : textsList) {
+				files.addElement(string);
+			}
+			fileNameList.setModel(files);
 		}
 		
 //		public void displayResults(){
@@ -114,6 +122,6 @@ import javax.swing.JScrollPane;
 //		}
 
 		public DefaultListModel<String> getModelList() {
-			return modelList;
+			return files;
 		}
 }

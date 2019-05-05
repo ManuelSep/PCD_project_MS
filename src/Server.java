@@ -21,7 +21,7 @@ public class Server implements Serializable {
 	
 	public static void main(String[] args) throws IOException {
 		try {
-			new Server("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files").startServer();
+			new Server("/Users/franciscoazevedo/Desktop").startServer();
 
 		} catch (IOException e) {
 			e.printStackTrace();
