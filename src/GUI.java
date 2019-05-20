@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 		private JPanel panelResult;
 //		private JList<String> resultsList = new JList<>(modelList);
 		private String ButtonName;
+		private File file;
 		
 		public GUI() {
 			initialize();
@@ -87,13 +88,14 @@ import javax.swing.JTextArea;
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					File file = new File("../PCD_project_MS/src/text_files/newFile.txt");
+					 file = new File("../PCD_project_MS/src/text_files/newFile.txt");
 					  
 					//Create the file
 					try {
 						if (file.createNewFile())
 						{
 						    System.out.println("File is created!");
+						    files.addElement("newFile.txt");
 						} else {
 						    System.out.println("File already exists.");
 						}
@@ -117,6 +119,19 @@ import javax.swing.JTextArea;
 			buttonPanel.add(btnNovo);
 			
 			btnApagar  = new JButton("Apagar");
+			btnApagar.addActionListener(new ActionListener() {
+				String fileNameToRemove;
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					//devolve o nome do ficheiro que estava selecionado quando se carrega no botao apagar
+					fileNameToRemove = fileNameList.getSelectedValue();
+					files.removeElement(fileNameToRemove);
+					
+					//isto é so para poder fazer varias vezes é codigo que vai ser mudado!
+					file = new File("../PCD_project_MS/src/text_files/newFile.txt");
+					file.delete();
+				}
+			});
 			buttonPanel.add(btnApagar);
 		}
 		
@@ -136,6 +151,7 @@ import javax.swing.JTextArea;
 		public JFrame getFrame() {
 			return frame;
 		}
+		
 		
 		public ArrayList<String> getTextList(){
 			return textsList;
