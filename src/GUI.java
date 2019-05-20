@@ -117,6 +117,14 @@ import javax.swing.JTextArea;
 			buttonPanel.add(btnNovo);
 			
 			btnApagar  = new JButton("Apagar");
+			btnApagar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+										
+				}
+			});
+			
 			buttonPanel.add(btnApagar);
 		}
 		
