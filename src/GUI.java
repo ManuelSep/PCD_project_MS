@@ -11,6 +11,8 @@ import javax.swing.JList;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -75,11 +77,28 @@ import javax.swing.JTextArea;
 			
 			JPanel buttonPanel = new JPanel();
 			frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+			
 			btnTamanho = new JButton("Tamanho");
 			buttonPanel.add(btnTamanho);
+			
 			btnExibir = new JButton("Exibir");
+			btnExibir.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					createButtonFrame("Exibindo", btnExibir);
+				}
+			});
 			buttonPanel.add(btnExibir);
+			
 			btnEditar = new JButton("Editar");
+			btnEditar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					createButtonFrame("Edintando", btnEditar);
+				}
+			});
 			buttonPanel.add(btnEditar);
 			
 			btnNovo = new JButton("Novo");
@@ -135,13 +154,44 @@ import javax.swing.JTextArea;
 			buttonPanel.add(btnApagar);
 		}
 		
-	
-		public void createButtonFrame(String ButtonName) {
-			frame = new JFrame(ButtonName);
+
+		public void createButtonFrame(String FrameName, JButton button) {
+			frame = new JFrame(FrameName);
 			frame.setResizable(false);
 			frame.setBounds(200, 200, 400, 200);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//open(); Abre uma nova frame como desejado mas ao fechar fecha todas as JFrames
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+			panelResult = new JPanel();
+			
+			JButton btn;
+			if (button.equals(btnExibir)) {
+				btn = new JButton("Fechar");
+				btn.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						frame.dispose();
+					}
+				});
+				
+				panelResult.add(btn);
+				frame.add(panelResult, BorderLayout.SOUTH);
+			}else if (button.equals(btnEditar)) {
+				btn = new JButton("Gravar");
+				btn.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//falta gravar o texto no ficheiro!!!
+						frame.dispose();
+					}
+				});
+				
+				panelResult.add(btn);
+				frame.add(panelResult, BorderLayout.SOUTH);
+			}
+			
+			open(); 
 		}
 		
 		public JButton getBtnEditar() {
