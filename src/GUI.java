@@ -9,6 +9,14 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JList;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.JProgressBar;
@@ -72,8 +80,42 @@ import javax.swing.JTextArea;
 			buttonPanel.add(btnExibir);
 			btnEditar = new JButton("Editar");
 			buttonPanel.add(btnEditar);
+			
 			btnNovo = new JButton("Novo");
+			btnNovo.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					File file = new File("../PCD_project_MS/src/text_files/newFile.txt");
+					  
+					//Create the file
+					try {
+						if (file.createNewFile())
+						{
+						    System.out.println("File is created!");
+						} else {
+						    System.out.println("File already exists.");
+						}
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					 
+					//Write Content
+					FileWriter writer;
+					try {
+						writer = new FileWriter(file);
+						writer.write("this is a new file");
+						writer.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			buttonPanel.add(btnNovo);
+			
 			btnApagar  = new JButton("Apagar");
 			buttonPanel.add(btnApagar);
 		}
@@ -105,21 +147,6 @@ import javax.swing.JTextArea;
 			}
 			fileNameList.setModel(files);
 		}
-		
-//		public void displayResults(){
-//			for (String text : getTextList()) {
-//				new JLabel(text);
-//			}
-//		}
-		
-//		public JList<String> getListResult() {
-//			
-//			return resultsList;
-//		}
-//		
-//		public void setListResult(JList<String> resultsList) {
-//			this.resultsList = resultsList;
-//		}
 
 		public DefaultListModel<String> getModelList() {
 			return files;
