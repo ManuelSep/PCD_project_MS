@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -63,21 +64,17 @@ public class Client extends Thread{
 	}
 
 	private void addButtonActions() {
-//		
+		
+		
+		
 //		gui.getBtnEditar().addActionListener(new ActionListener() {
 //			
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
-//				btnEditar();
+//				
 //			}
 //			
-//			private void btnEditar() {
-//				for (int i = 0; i < buttonOptions.length; i++) {
-//					if(buttonOptions[i] == "Editar") {
-//						gui.createButtonFrame(buttonOptions[i]);
-//					}
-//				}
-//			}
+//			
 //		});
 		
 //			gui.getBtnSearch().addActionListener(new ActionListener() {
@@ -94,19 +91,6 @@ public class Client extends Thread{
 //				}
 //			});
 		
-//			gui.getBtnDownload().addActionListener(new ActionListener() {
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					download();
-//				}
-//
-//				private void download() {
-//					//gui.getModelList().clear();
-//					String word = gui.getListResult().getSelectedValue();
-//					gui.getModelList().addElement(word);
-//				}
-//			});
 		
 		
 

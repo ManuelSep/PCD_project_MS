@@ -89,6 +89,10 @@ import javax.swing.JTextArea;
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					// o cliente quer exibir um ficheiro
+					// o client manda uma mensagem para o servidor
+					// receber resposta
+					// o gui trata a resposta
 					String file = fileNameList.getSelectedValue();
 					try {
 						createButtonFrame("Exibindo", btnExibir, file);
@@ -199,7 +203,6 @@ import javax.swing.JTextArea;
 				});
 				
 				panelResult.add(btn);
-				frame.add(panelResult, BorderLayout.SOUTH);
 			}else if (button.equals(btnEditar)) {
 				btn = new JButton("Gravar");
 				btn.addActionListener(new ActionListener() {
@@ -212,11 +215,14 @@ import javax.swing.JTextArea;
 				});
 				
 				panelResult.add(btn);
-				frame.add(panelResult, BorderLayout.SOUTH);
 			}
-			
+			frame.add(panelResult, BorderLayout.SOUTH);
 			frame.add(panelContent, BorderLayout.CENTER);
 			open(); 
+		}
+		
+		public JButton getBtnApagar() {
+			return btnApagar;
 		}
 		
 		public JButton getBtnEditar() {
