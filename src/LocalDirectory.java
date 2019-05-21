@@ -92,4 +92,8 @@ public class LocalDirectory implements PCDDirectory {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getRootName() {
+		return rootName;
+	}
 }

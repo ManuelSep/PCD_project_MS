@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument.Content;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -36,6 +38,7 @@ import javax.swing.JTextArea;
 		private ArrayList<String> textsList;
 		private DefaultListModel<String> files = new DefaultListModel<>();
 		private JList<String> fileNameList = new JList<String>();
+		private JTextArea textContent = new JTextArea();
 		private JPanel panelResult;
 //		private JList<String> resultsList = new JList<>(modelList);
 		private String ButtonName;
@@ -86,7 +89,13 @@ import javax.swing.JTextArea;
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					createButtonFrame("Exibindo", btnExibir);
+					String file = fileNameList.getSelectedValue();
+					try {
+						createButtonFrame("Exibindo", btnExibir, file);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			buttonPanel.add(btnExibir);
@@ -96,7 +105,14 @@ import javax.swing.JTextArea;
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					createButtonFrame("Edintando", btnEditar);
+					String file = fileNameList.getSelectedValue();
+					try {
+						createButtonFrame("Edintando", btnEditar, file);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				}
 			});
 			buttonPanel.add(btnEditar);
@@ -155,13 +171,21 @@ import javax.swing.JTextArea;
 		}
 		
 
-		public void createButtonFrame(String FrameName, JButton button) {
+		public void createButtonFrame(String FrameName, JButton button, String file) throws FileNotFoundException {
 			frame = new JFrame(FrameName);
 			frame.setResizable(false);
 			frame.setBounds(200, 200, 400, 200);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 			panelResult = new JPanel();
+			JPanel panelContent = new JPanel();
+			String fileToScann = "../PCD_project_MS/src/text_files/" + file;
+			Scanner sc = new Scanner(new File(fileToScann));
+			while(sc.hasNextLine()){
+			    String str = sc.nextLine(); 
+			    textContent.setText(str);
+			}
+			panelContent.add(textContent);
 			
 			JButton btn;
 			if (button.equals(btnExibir)) {
@@ -191,6 +215,7 @@ import javax.swing.JTextArea;
 				frame.add(panelResult, BorderLayout.SOUTH);
 			}
 			
+			frame.add(panelContent, BorderLayout.CENTER);
 			open(); 
 		}
 		
