@@ -17,6 +17,8 @@ public class Server implements Serializable {
 	private Socket socket;
 	private String rootName;
 	private LocalDirectory localDirectory;
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 	public ArrayList <Client> usersList;
 	
 	public static void main(String[] args) throws IOException {
@@ -40,7 +42,7 @@ public class Server implements Serializable {
 		System.out.println("Ready, wait for users.");
 		while (true) {
 			socket = serverSocket.accept();
-			System.out.println("Conection accepted");
+			System.out.println("Connection accepted");
 			sendAllFiles(socket);
 			doConnection(socket);
 		}
@@ -55,15 +57,39 @@ public class Server implements Serializable {
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		out.writeObject("messagem do server");
-		String message;
+		Object message;
 		try {
-			message = (String) in.readObject();
+			message = in.readObject();
 			System.out.println(message);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void filterMessage(Object messageReceived, ObjectOutputStream out) {
+		if(messageReceived instanceof ShowFile) {
+			String fileName = ((ShowFile)messageReceived).getFileName();
+			try {
+				out.writeObject(localDirectory.getFile(fileName));
+			} catch (IOException exception) {
+				exception.getStackTrace();
+			}
+		}
+
+
+	}
+
+	private void handleClient(Socket socket) throws IOException {
+		out = new ObjectOutputStream(socket.getOutputStream());
+		in = new ObjectInputStream(socket.getInputStream());
+		String messageReceived;
+		try {
+			messageReceived = (String)in.readObject();
+			filterMessage(messageReceived, out);
+		} catch (Exception exception){
+
+		}
+	}
 	public void closeServerSocket() {
 		try {
 			System.out.println("Directory will close.");

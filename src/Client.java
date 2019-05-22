@@ -63,37 +63,16 @@ public class Client extends Thread{
 		}
 	}
 
-	private void addButtonActions() {
-		
-		
-		
-//		gui.getBtnEditar().addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//			
-//			
-//		});
-		
-//			gui.getBtnSearch().addActionListener(new ActionListener() {
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					buttonSearch();
-//				}
-//
-//				private void buttonSearch() {
-//					gui.getModelList().clear();
-//					String word = gui.getTextSearch().getText();
-//					gui.getModelList().addElement(word);
-//				}
-//			});
-		
-		
-		
+	private void handleServerAnswers() throws ClassNotFoundException, IOException{
+		out = new ObjectOutputStream(socket.getOutputStream());
+		in = new ObjectInputStream(socket.getInputStream());
 
+
+	}
+
+
+
+	private void addButtonActions() {
 		gui.getFrame().addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent windowEvent) {
