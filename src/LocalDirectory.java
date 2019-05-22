@@ -27,7 +27,8 @@ public class LocalDirectory implements PCDDirectory {
 	
 	@Override
 	public boolean fileExists(String name) throws IOException {
-		return !files.stream().filter(p -> p.getName() == name).collect(Collectors.toList()).isEmpty();
+		System.out.println("Rechaed File exists");
+		return !files.stream().filter(p -> p.getFileName().equals(name)).collect(Collectors.toList()).isEmpty();
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class LocalDirectory implements PCDDirectory {
 
 	@Override
 	public void delete(String name) throws FileSystemException, IOException {
-		files.removeIf(p -> p.getName() == name);
+		files.removeIf(p -> p.getFileName().equals(name));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class LocalDirectory implements PCDDirectory {
 		String[] names = new String[files.size()];
 		int i = 0;
 		for (LocalFile file : files) {
-			names[i] = file.getName();
+			names[i] = file.getFileName();
 			i++;
 		}
 		return names;
@@ -56,9 +57,10 @@ public class LocalDirectory implements PCDDirectory {
 
 	@Override
 	public PCDFile getFile(String name) throws FileSystemException, IOException {
-		if(fileExists(name)) 
-			return files.stream().filter(p -> p.getName() == name).collect(Collectors.toList()).get(0);
-		else
+		if(fileExists(name)){
+			System.out.println("EXISTS");
+			return files.stream().filter(p -> p.getFileName().equals(name)).collect(Collectors.toList()).get(0);
+		}else
 			throw new FileSystemException("The file named " + name + " does not exist");
 	}	
 	
@@ -76,23 +78,7 @@ public class LocalDirectory implements PCDDirectory {
 			e.printStackTrace();
 		}
 	}
-	public void testeMessage() {
-		LocalDirectory test = new LocalDirectory("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files");
-		try {
-			for (String name : test.getDirectoryListing()) {
-				System.out.println(name);
-				
-			}
-			
-		} catch (FileSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+
 	public String getRootName() {
 		return rootName;
 	}

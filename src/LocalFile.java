@@ -5,15 +5,14 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.FileSystemException;
 
-public class LocalFile implements PCDFile {
+public class LocalFile implements PCDFile{
 	public static final int NUM_READERS=3;
 	private File file; 
 	
 	public LocalFile(File file){
 		this.file = file;
 	}
-	
-	
+
 
 	@Override
 	public String read() throws FileSystemException , IOException {
@@ -88,7 +87,7 @@ public class LocalFile implements PCDFile {
 	}
 
 	@Override
-	public String getName() {
+	public String getFileName() {
 		return file.getName();
 	}
 
@@ -124,8 +123,7 @@ public class LocalFile implements PCDFile {
 
 	@Override
 	public int length() throws FileSystemException, IOException {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)file.length();
 	}
 	
 }
