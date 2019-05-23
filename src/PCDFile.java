@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.FileSystemException;
 
-public interface PCDFile extends Serializable {
-	public String getName();
+public interface PCDFile extends Serializable  {
+	public String getFileName();
 
 	public boolean readLock() throws IOException;
 

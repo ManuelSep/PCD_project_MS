@@ -25,6 +25,7 @@ public class Client extends Thread{
 	public static void main(String[] args) throws IOException {
 		try {
 			new Client().runClient();
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,27 +37,20 @@ public class Client extends Thread{
 			socket = new Socket("localhost", 8080);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
-			out.writeObject(new String("INSC 127.0.0.1 8081"));
 			System.out.println("Connected to Server");
-			String[] messageFromServer = (String[])in.readObject();
 			System.out.println("cheguei aqui");
-			
-			for (String fileName : messageFromServer) {
-				System.out.println(fileName);
-//				texts.add(fileName);
-				
-//				modelList.addElement(fileName);
-				
-			}
-			
+			/*
 			gui = new GUI();
 			addButtonActions();
 			
 			gui.open();
 			
 			gui.setTextList(messageFromServer);
-			
-			
+			*/
+			sendShowFile(new ShowFile("testeA.txt"), out);
+			while (true) {
+				handleServerAnswers();
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,10 +58,35 @@ public class Client extends Thread{
 	}
 
 	private void handleServerAnswers() throws ClassNotFoundException, IOException{
-		out = new ObjectOutputStream(socket.getOutputStream());
-		in = new ObjectInputStream(socket.getInputStream());
+		System.out.println("reached handleServerAswers");
+		try {
+			Object messageReceived = in.readObject();
+			filterMessage(messageReceived, out);
+		} catch (Exception exception){
+			exception.getStackTrace();
+		}
+	}
 
+	private void filterMessage(Object messageReceived, ObjectOutputStream out) {
+		if (messageReceived instanceof SuccessCreatingFile) {
+			System.out.println("reached handleServerAswers");
+			String message = ((SuccessCreatingFile) messageReceived).getMessage();
+			System.out.println(message);
+		} else if (messageReceived instanceof PCDFile) {
+			System.out.println("received file " + messageReceived);
+		} else {
+			System.out.println("ELSE" + messageReceived);
+		}
+	}
 
+	public void sendShowFile(ShowFile showFile, ObjectOutputStream out) {
+		try {
+			System.out.println("SENDING SHOW FILE " + showFile.getFileName());
+			out.writeObject(showFile);
+
+		} catch (IOException ex) {
+			ex.getStackTrace();
+		}
 	}
 
 
