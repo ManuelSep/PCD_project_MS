@@ -17,7 +17,6 @@ public class Client extends Thread {
 			new Client().runClient();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

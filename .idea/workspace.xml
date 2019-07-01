@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e864288a-2a21-4ba4-abe1-dae889d339cf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Client$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LocalDirectory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LocalDirectory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LocalFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LocalFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PCDFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PCDFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/text_files/newFile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/text_files/newFile.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,6 +10,10 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="PCD_project_MS" />
@@ -30,18 +23,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
+            <state relative-caret-position="285">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.classpath">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -257,12 +245,12 @@
       <workItem from="1561400270228" duration="446000" />
       <workItem from="1561402106331" duration="408000" />
       <workItem from="1561457508711" duration="416000" />
-      <workItem from="1562009893531" duration="1775000" />
+      <workItem from="1562009893531" duration="2176000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31961000" />
+    <option name="totallyTimeSpent" value="32362000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -447,8 +435,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
