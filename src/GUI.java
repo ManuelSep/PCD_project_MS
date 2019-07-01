@@ -28,23 +28,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 	public class GUI {
-	
+		private Client client;
 		private JFrame frame;
-		private JButton btnTamanho;
-		private JButton btnExibir;
-		private JButton btnEditar;
-		private JButton btnNovo;
-		private JButton btnApagar;
+		private JButton btnTamanho = new JButton("Tamanho");;
+		private JButton btnExibir = new JButton("Exibir");;
+		private JButton btnEditar = new JButton("Editar");;
+		private JButton btnNovo = new JButton("Novo");;
+		private JButton btnApagar = new JButton("Apagar");;
 		private ArrayList<String> textsList;
 		private DefaultListModel<String> files = new DefaultListModel<>();
 		private JList<String> fileNameList = new JList<String>();
 		private JTextArea textContent = new JTextArea();
 		private JPanel panelResult;
-//		private JList<String> resultsList = new JList<>(modelList);
-		private String ButtonName;
 		private File file;
+
+
 		
-		public GUI() {
+		public GUI(Client client) {
+			this.client = client;
 			initialize();
 		}
 		
@@ -56,6 +57,8 @@ import javax.swing.JTextArea;
 		 * Create the application.
 		 * Initialize the contents of the frame.
 		 */
+
+
 		private void initialize() {
 			frame = new JFrame("File explorer");
 			frame.setResizable(false);
@@ -64,61 +67,21 @@ import javax.swing.JTextArea;
 			frame.getContentPane().setLayout(new BorderLayout());
 						
 			/***** Center *****/
-			
-			panelResult = new JPanel();
-	
-//			for (String text : getTextList()) {
-//				panelResult.add(new JLabel(text));
-//			}
-			
-			panelResult.add(fileNameList);
-			frame.getContentPane().add(panelResult, BorderLayout.CENTER);
-			
-			
-			
+
+			centralPanel();
+
+
 			/***** Bottom *****/
 			
 			JPanel buttonPanel = new JPanel();
 			frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 			
-			btnTamanho = new JButton("Tamanho");
 			buttonPanel.add(btnTamanho);
-			
-			btnExibir = new JButton("Exibir");
-			btnExibir.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// o cliente quer exibir um ficheiro
-					// o client manda uma mensagem para o servidor
-					// receber resposta
-					// o gui trata a resposta
-					String file = fileNameList.getSelectedValue();
-					try {
-						createButtonFrame("Exibindo", btnExibir, file);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			});
+
+			actionExibir();
 			buttonPanel.add(btnExibir);
-			
-			btnEditar = new JButton("Editar");
-			btnEditar.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String file = fileNameList.getSelectedValue();
-					try {
-						createButtonFrame("Edintando", btnEditar, file);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-				}
-			});
+
+			actionEditar();
 			buttonPanel.add(btnEditar);
 			
 			btnNovo = new JButton("Novo");
@@ -173,7 +136,59 @@ import javax.swing.JTextArea;
 			});
 			buttonPanel.add(btnApagar);
 		}
-		
+
+		private void actionEditar() {
+			btnEditar.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String file = fileNameList.getSelectedValue();
+					// client.asKForShowFile();
+					//
+					try {
+						createButtonFrame("Edintando", btnEditar, file);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+				}
+			});
+		}
+
+		private void actionExibir() {
+			btnExibir.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// client.askForShowFile();
+
+					// o cliente quer exibir um ficheiro
+					// o client manda uma mensagem para o servidor
+					// receber resposta
+					// o gui trata a resposta
+					String file = fileNameList.getSelectedValue();
+					try {
+						createButtonFrame("Exibindo", btnExibir, file);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
+		}
+
+		private void centralPanel() {
+			panelResult = new JPanel();
+
+//			for (String text : getTextList()) {
+//				panelResult.add(new JLabel(text));
+//			}
+
+			panelResult.add(fileNameList);
+			frame.getContentPane().add(panelResult, BorderLayout.CENTER);
+		}
+
 
 		public void createButtonFrame(String FrameName, JButton button, String file) throws FileNotFoundException {
 			frame = new JFrame(FrameName);

@@ -1,9 +1,8 @@
 import java.io.Serializable;
 
-public class Utils {
-}
+class Request implements Serializable{}
 
-class FileActions implements Serializable {
+class FileActions extends Request {
     private String fileName;
 
     public FileActions(String fileName) {
@@ -14,6 +13,7 @@ class FileActions implements Serializable {
         return fileName;
     }
 }
+class AllFiles extends Request {}
 
 class EditFile extends FileActions {
     EditFile(String fileName) {
@@ -45,14 +45,14 @@ class NewFile extends FileActions {
     }
 }
 
-class Success implements Serializable{
+class Success extends Request{
     private String message;
 
     Success(String message) {
         this.message = message;
     }
 
-    public String getMessage() {
+    String getMessage() {
         return message;
     }
 }
@@ -64,8 +64,14 @@ class SuccessDeletingFile extends Success {
 }
 
 class SuccessSendingFileSize extends Success {
-    SuccessSendingFileSize(String size, String fileName) {
-        super("size of file " + fileName + " is " + " size");
+    private String size;
+    SuccessSendingFileSize(String fileName, String size) {
+        super("size of file " + fileName + " is " + size + "B");
+        this.size = size;
+    }
+
+    public String getSizeFile(){
+       return size;
     }
 }
 
@@ -75,11 +81,15 @@ class SuccessCreatingFile extends Success {
     }
 }
 
-class Failure implements Serializable{
+class Failure extends Request {
     private String message;
 
     Failure(String message) {
         this.message = message;
+    }
+
+    String getMessage() {
+        return message;
     }
 }
 
@@ -88,3 +98,4 @@ class CommandNotFound extends Failure {
         super("Command not found");
     }
 }
+
