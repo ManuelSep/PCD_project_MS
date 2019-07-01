@@ -1,27 +1,17 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-
-public class Client extends Thread{
-	private DefaultListModel<String> modelList;
-//	private JList<String> resultsList = new JList<>(modelList);
+public class Client extends Thread {
+	private Interface gui;
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private GUI gui;
-	private ArrayList<String> texts = new ArrayList<>();
-	private String [] buttonOptions = {"Tamanho","Exibir","Editar"};
-	
+	private LinkedList<Request> pendingRequests = new LinkedList<>();
+
 	public static void main(String[] args) throws IOException {
 		try {
 			new Client().runClient();
@@ -32,22 +22,13 @@ public class Client extends Thread{
 		}
 	}
 
-	private void runClient() throws IOException, ClassNotFoundException {	
+	public void runClient() throws IOException, ClassNotFoundException {
 		try {
+
 			socket = new Socket("localhost", 8080);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
-			System.out.println("Connected to Server");
-			System.out.println("cheguei aqui");
-			/*
-			gui = new GUI();
-			addButtonActions();
-			
-			gui.open();
-			
-			gui.setTextList(messageFromServer);
-			*/
-			sendShowFile(new ShowFile("testeA.txt"), out);
+			gui = new Interface(this);
 			while (true) {
 				handleServerAnswers();
 			}
@@ -61,6 +42,7 @@ public class Client extends Thread{
 		System.out.println("reached handleServerAswers");
 		try {
 			Object messageReceived = in.readObject();
+			pendingRequests.add((Request) messageReceived);
 			filterMessage(messageReceived, out);
 		} catch (Exception exception){
 			exception.getStackTrace();
@@ -69,17 +51,60 @@ public class Client extends Thread{
 
 	private void filterMessage(Object messageReceived, ObjectOutputStream out) {
 		if (messageReceived instanceof SuccessCreatingFile) {
-			System.out.println("reached handleServerAswers");
 			String message = ((SuccessCreatingFile) messageReceived).getMessage();
 			System.out.println(message);
-		} else if (messageReceived instanceof PCDFile) {
-			System.out.println("received file " + messageReceived);
-		} else {
-			System.out.println("ELSE" + messageReceived);
+		} else if (messageReceived instanceof File) {
+			System.out.println("Received file " + messageReceived);
+			PCDFile fileReceived = new LocalFile((File) messageReceived);
+			try {
+				gui.setCurrentSelectShowFile(fileReceived.read());
+				System.out.println("Content of txt file " + fileReceived.read());
+			} catch (Exception exception) {
+				exception.getStackTrace();
+			}
+		} else if (messageReceived instanceof SuccessSendingFileSize) {
+			gui.setSize(((SuccessSendingFileSize) messageReceived).getSizeFile());
+			System.out.println(((SuccessSendingFileSize)messageReceived).getMessage());
+		} else if (messageReceived instanceof SuccessDeletingFile){
+			System.out.println(((SuccessDeletingFile)messageReceived).getMessage());
+		} else if (messageReceived instanceof Failure){
+			if (messageReceived instanceof CommandNotFound)
+				System.out.println(((CommandNotFound)messageReceived).getMessage());
+			else {
+				System.out.println(((Failure)messageReceived).getMessage());
+			}
+		} else if (messageReceived instanceof String[]) {
+			System.out.println("Initializing the FileName list");
+			gui.setTextList((String[])messageReceived);
+		}
+
+		else {
+			System.out.println("Something went wrong");
 		}
 	}
 
-	public void sendShowFile(ShowFile showFile, ObjectOutputStream out) {
+	public void askForAllFiles(){
+		try{
+			System.out.println("Asking for all files");
+			AllFiles afiles = new AllFiles();
+
+			out.writeObject(afiles);
+		} catch (Exception exception) {
+			exception.getStackTrace();
+		}
+	}
+
+	public void askToCreateNewFile(NewFile newFile) {
+		try {
+			System.out.println("SENDING SHOW FILE " + newFile.getFileName());
+			out.writeObject(newFile);
+
+		} catch (IOException ex) {
+			ex.getStackTrace();
+		}
+	}
+
+	public void askToShowFile(ShowFile showFile) {
 		try {
 			System.out.println("SENDING SHOW FILE " + showFile.getFileName());
 			out.writeObject(showFile);
@@ -89,19 +114,25 @@ public class Client extends Thread{
 		}
 	}
 
-
-
-	private void addButtonActions() {
-		gui.getFrame().addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent windowEvent) {
-				closeSocket();
-			}
-
-		});
-
+	public void askToDeleteFile(DeleteFile deleteFile) {
+		try {
+			System.out.println("Asking to delete " + deleteFile.getFileName());
+			out.writeObject(deleteFile);
+		} catch (IOException exception) {
+			exception.getStackTrace();
+		}
 	}
-	
+
+	public void askForSizeOfFile(SizeOfFile sizeOfFile){
+		try {
+			System.out.println("Asking for size of file " + sizeOfFile.getFileName());
+			out.writeObject(sizeOfFile);
+		} catch (IOException exception) {
+			exception.getStackTrace();
+		}
+	}
+
+
 	private void closeSocket() {
 		// TODO Auto-generated method stub
 	}

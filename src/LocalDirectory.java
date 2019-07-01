@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystemException;
 import java.util.LinkedList;
@@ -33,7 +34,9 @@ public class LocalDirectory implements PCDDirectory {
 
 	@Override
 	public PCDFile newFile(String name) throws FileSystemException, IOException {
+		System.out.println("Reached newFile");
 		LocalFile newFile = new LocalFile(new File(rootName + "/" + name));
+		System.out.println("new file:" + newFile.getFile());
 		files.add(newFile);
 		return newFile;
 				
@@ -41,11 +44,16 @@ public class LocalDirectory implements PCDDirectory {
 
 	@Override
 	public void delete(String name) throws FileSystemException, IOException {
-		files.removeIf(p -> p.getFileName().equals(name));
+		if (getFile(name).getFile().delete()) {
+			files.removeIf(p -> p.getFileName().equals(rootName + "/" + name));
+		} else {
+			throw new FileNotFoundException("File " + name + " not found.");
+		}
 	}
 
 	@Override
 	public String[] getDirectoryListing() throws FileSystemException, IOException {
+		System.out.println("Getting all filenames from LocaLDirectory");
 		String[] names = new String[files.size()];
 		int i = 0;
 		for (LocalFile file : files) {
@@ -65,11 +73,11 @@ public class LocalDirectory implements PCDDirectory {
 	}	
 	
 	public static void main(String[] args) {
-		LocalDirectory test = new LocalDirectory("/Users/manelsepulveda/eclipse-workspace/PCD_project_MS/src/text_files");
+		LocalDirectory test = new LocalDirectory("/Users/franciscoazevedo/code/java/PCD_project_MS/src/text_files");
+
 		try {
-			for (String name : test.getDirectoryListing()) {
-				System.out.println(name);
-			}
+			test.delete("testFile.txt");
+			// System.out.println(test.files.size());
 		} catch (FileSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

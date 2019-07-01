@@ -4,19 +4,47 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.FileSystemException;
+import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
 
-public class LocalFile implements PCDFile{
-	public static final int NUM_READERS=3;
+public class LocalFile extends Thread implements PCDFile{
+	public int currentReaders = 0;
+	public static final int MAX_NUM_READERS = 3;
 	private File file; 
 	
 	public LocalFile(File file){
 		this.file = file;
+		try {
+			file.createNewFile();
+		}catch(IOException exc) {
+			exc.getStackTrace();
+		}
 	}
 
+	public File getFile() throws IOException{
+		return file;
+	}
 
 	@Override
-	public String read() throws FileSystemException , IOException {
-		return new String(read(0, length()));
+	public String read() throws FileSystemException , IOException, InterruptedException {
+		String result = "";
+		synchronized (this) {
+			if(currentReaders ++ <= MAX_NUM_READERS) {
+				System.out.println("Reading the file");
+				Scanner sc = new Scanner(file);
+				while (sc.hasNextLine()) {
+					result = sc.nextLine();
+				}
+				currentReaders--;
+				notifyAll();
+			}
+			else {
+				System.out.println("Waiting for available reading space");
+				wait();
+				read();
+			}
+		}
+		return result;
 	}
 	
 	@Override
@@ -93,8 +121,7 @@ public class LocalFile implements PCDFile{
 
 	@Override
 	public boolean readLock() throws IOException {
-		// TODO Auto-generated method stub
-		return false;
+		return currentReaders ++ < MAX_NUM_READERS;
 	}
 
 	@Override

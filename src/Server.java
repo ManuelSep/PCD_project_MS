@@ -1,10 +1,7 @@
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.FileSystemException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Server implements Serializable {
 	
@@ -18,7 +15,7 @@ public class Server implements Serializable {
 	private ObjectOutputStream out;
 	public ArrayList <Client> usersList;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		try {
 			new Server("../PCD_project_MS/src/text_files").startServer();
 
@@ -37,40 +34,39 @@ public class Server implements Serializable {
 //		usersList = new ArrayList<Client>();
 		serverSocket = new ServerSocket(PORTO);
 		System.out.println("Ready, wait for users.");
+		socket = serverSocket.accept();
+		out = new ObjectOutputStream(socket.getOutputStream());
+		in = new ObjectInputStream(socket.getInputStream());
+		System.out.println("Connection accepted");
 		while (true) {
-			socket = serverSocket.accept();
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
-			System.out.println("Connection accepted");
+
 			handleClient();
 		}
 	}
 
-	public void sendAllFiles() throws IOException {
-		out = new ObjectOutputStream(socket.getOutputStream());
-		out.writeObject(localDirectory.getDirectoryListing());
+	private void sendAllFiles() {
+		try{
+			System.out.println("Sending All Files" + localDirectory.getDirectoryListing());
+			out.writeObject(localDirectory.getDirectoryListing());
+		} catch (Exception exception) {
+			exception.getStackTrace();
+		}
 	}
 
 	private void handleClient() throws IOException {
 		System.out.println("Handling with client");
 		try {
 			Object messageReceived = in.readObject();
-			System.out.println("Grab object" + messageReceived);
-			System.out.println("Received object " + messageReceived);
 			filterMessage(messageReceived, out);
 		} catch (Exception exception){
 			exception.getStackTrace();
 		}
 	}
 	private void sendFile(FileActions fileActions) {
-		System.out.println("RECHEAD SEND FILE");
 		String fileName = fileActions.getFileName();
 		try {
-			System.out.println("RECHEAD SEND FILE 69" +  fileName + localDirectory.getFile(fileName));
 			PCDFile fileToSend = localDirectory.getFile(fileName);
-			System.out.println("Sending File:" + fileToSend );
-			out.writeObject(fileToSend);
-			System.out.println("Files");
+			out.writeObject(fileToSend.getFile());
 		} catch (IOException exception) {
 			exception.getStackTrace();
 		}
@@ -99,8 +95,9 @@ public class Server implements Serializable {
 	private void newFile(NewFile newFile) {
 		String fileName = newFile.getFileName();
 		try {
-			localDirectory.newFile(fileName);
-			out.writeObject(new SuccessCreatingFile(fileName));
+			PCDFile newFiles = localDirectory.newFile(fileName);
+			System.out.println("HERE" + newFiles);
+			out.writeObject(new SuccessCreatingFile(fileName + newFiles.getFile().getAbsolutePath()));
 		} catch (IOException exception) {
 			exception.getStackTrace();
 		}
@@ -114,10 +111,8 @@ public class Server implements Serializable {
 		}
 	}
 
-
 	private void filterMessage(Object messageReceived, ObjectOutputStream out) {
 		if(messageReceived instanceof ShowFile) {
-			System.out.println("reached showFile" + messageReceived);
 			sendFile((ShowFile) messageReceived);
 		} else if (messageReceived instanceof  EditFile) {
 			sendFile((EditFile) messageReceived); // mudar isto para also editar, ie, receber texto novo.
@@ -127,6 +122,9 @@ public class Server implements Serializable {
 			sendSizeOfFile((SizeOfFile) messageReceived);
 		} else if (messageReceived instanceof NewFile) {
 			newFile((NewFile) messageReceived);
+		} else if (messageReceived instanceof AllFiles) {
+			System.out.println("Received a request to get AllFiles");
+			sendAllFiles();
 		} else {
 			sendErrorMessage();
 		}
