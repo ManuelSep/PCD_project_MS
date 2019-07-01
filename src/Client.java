@@ -3,14 +3,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.LinkedList;
 
 public class Client extends Thread {
 	private Interface gui;
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private LinkedList<Request> pendingRequests = new LinkedList<>();
 
 	public static void main(String[] args) throws IOException {
 		try {
@@ -41,7 +39,6 @@ public class Client extends Thread {
 		System.out.println("reached handleServerAswers");
 		try {
 			Object messageReceived = in.readObject();
-			pendingRequests.add((Request) messageReceived);
 			filterMessage(messageReceived, out);
 		} catch (Exception exception){
 			exception.getStackTrace();

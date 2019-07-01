@@ -1,8 +1,7 @@
 import java.io.Serializable;
 
-class Request implements Serializable{}
 
-class FileActions extends Request {
+class FileActions implements Serializable {
     private String fileName;
 
     public FileActions(String fileName) {
@@ -13,7 +12,7 @@ class FileActions extends Request {
         return fileName;
     }
 }
-class AllFiles extends Request {}
+class AllFiles implements Serializable{}
 
 class EditFile extends FileActions {
     EditFile(String fileName) {
@@ -45,7 +44,7 @@ class NewFile extends FileActions {
     }
 }
 
-class Success extends Request{
+class Success implements Serializable{
     private String message;
 
     Success(String message) {
@@ -81,7 +80,7 @@ class SuccessCreatingFile extends Success {
     }
 }
 
-class Failure extends Request {
+class Failure implements Serializable{
     private String message;
 
     Failure(String message) {
